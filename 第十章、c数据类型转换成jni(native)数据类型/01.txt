@@ -1,0 +1,73 @@
+1.基本数据类型转换
+本地函数：
+    public native byte getByte();
+    public native short getShort();
+    public native char getChar();
+    public native int getInt();
+    public native long getLong();
+    public native boolean getBool();
+    public native float getFloat();
+    public native double getDouble();
+c语言中对应的函数：
+    extern "C"
+    jbyte Java_com_example_myndk_MainActivity_getByte(JNIEnv *env,jobject thiz){
+        char x = '1';
+        jbyte y = x;
+        return y;
+    }
+
+    extern "C"
+    jshort Java_com_example_myndk_MainActivity_getShort(JNIEnv *env,jobject thiz){
+        short x = 2;
+        jshort y = x;
+        return y;
+    }
+
+    extern "C"
+    jchar Java_com_example_myndk_MainActivity_getChar(JNIEnv *env,jobject thiz){
+        char x = '3';
+        jchar y = static_cast<jchar>(x);
+        return y;
+    }
+    extern "C"
+    jint Java_com_example_myndk_MainActivity_getInt(JNIEnv *env,jobject thiz){
+        int x = 4;
+        jint y = x;
+        return y;
+    }
+    extern "C"
+    jlong Java_com_example_myndk_MainActivity_getLong(JNIEnv *env,jobject thiz){
+        long x = 5L;
+        jlong y = x;
+        return y;
+    }
+    extern "C"
+    jboolean Java_com_example_myndk_MainActivity_getBool(JNIEnv *env,jobject thiz){
+        unsigned char x = 6;
+        jboolean y = x;
+        return y;
+    }
+    extern "C"
+    jfloat Java_com_example_myndk_MainActivity_getFloat(JNIEnv *env,jobject thiz){
+        float x = 7.0f;
+        jfloat y = x;
+        return y;
+    }
+    extern "C"
+    jdouble Java_com_example_myndk_MainActivity_getDouble(JNIEnv *env,jobject thiz){
+        double x = 8.0;
+        jdouble y = x;
+        return y;
+    }
+2.转换jstring类型
+    Java中的函数：
+        public native String getString();
+    c语言中对应的函数：
+        extern "C"
+        JNIEXPORT jstring JNICALL
+        Java_com_example_myndk_MainActivity_getString(JNIEnv *env, jobject thiz) {
+            // TODO: implement getString()
+            const char * p = "你好!";
+            jstring word = (*env).NewStringUTF(p);
+            return word;
+        }

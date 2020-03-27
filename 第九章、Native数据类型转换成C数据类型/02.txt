@@ -1,0 +1,20 @@
+方法一：str拷贝出的新字符串在jvm中，要用ReleaseStringUTFChars去销毁
+    1.const char* p = GetStringUTFchars(env,jString str, );
+    2.ReleaseStringUTFChars(env,jString str,p);
+    void Java_包名_类名_方法名(JNIEnv* env,jobject obj, jString word ){
+        const char* p = (*env)->GetStringUTFChars(env,word ,NULL);
+        LOGI("c: p=%s\n",p);
+        (*env)->ReleaseStringUTFChars(env,word,p);
+    }
+
+
+方法二：str拷贝出的新字符串在c的运行空间中，没有在jvm中，所以没有相应的销毁函数
+    1.int len = (*env)->GetStringLength(env,word);
+    2.(*env)->GetStringUTFRegion(env,word,0,len,str);
+
+    void Java_包名_类名_方法名(JNIEnv* env,jobject obj, jString word ){
+        int len = (*env)->GetStringLength(env,word);
+        char str[len];
+        (*env)->GetStringUTFRegion(env,word,0,len,str);
+        LOGI("c: str=%s\n",str);
+    }

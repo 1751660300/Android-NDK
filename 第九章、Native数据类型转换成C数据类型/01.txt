@@ -1,0 +1,20 @@
+本地函数的声明
+    public native void show(boolean a1,byte a2,short a3,int a4,long a5,float a6,double a7,char a8);
+
+    show(true,(byte)1,(short)2,3,4L,5.0f,6.0,'A');
+c文件中对应的函数
+    extern "C"
+    JNIEXPORT void JNICALL
+    Java_com_example_myndk_MainActivity_show(JNIEnv *env, jobject thiz, jboolean a1, jbyte a2,
+                                             jshort a3, jint a4, jlong a5, jfloat a6, jdouble a7,
+                                             jchar a8) {
+        // TODO: implement show()
+        unsigned char a_1 = a1;
+        char a_2 = a2;
+        short a_3 = a3;
+        int a_4 = a4;
+        long a_5 = a5;
+        float a_6 = a6;
+        double a_7 = a7;
+        unsigned short a_8 = a8;
+    }

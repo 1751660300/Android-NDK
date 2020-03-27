@@ -1,0 +1,51 @@
+call和ret指令都是转移指令，它们都修改IP，或同时修改CS和IP
+一、ret和retf指令
+    1.cpu执行ret指令时，进行下面两步操作：
+        1.（IP）=（（ss）*16+（sp））
+        2.（SP）=（SP）+2
+    2.retf指令用栈中的数据，修改CS和IP的内容，从而实现远转移；
+        1.（IP）=（（ss）*16+（sp））
+        2.（SP）=（SP）+2
+        3.（CS）=（（ss）*16+（sp））
+        4.（SP）=（SP）+2
+二、call指令
+    call指令经常跟ret指令配合使用，因此cpu执行call指令，进行两步操作：
+        1.将当前的IP或CS和IP压入栈中；
+        2.转移（jmp）
+    call指令不能实现短转移，除此之外，call指令实现转移的方法和jmp指令原理相同
+    使用：
+        call 标号   相当于 push IP，jmp near ptr
+三、依据位移进行转移的call指令
+四、依据目的地址在指令中的call指令
+    call far ptr 标号 实现的是段间转移；相当于push cs ，push ip，jmp far ptr 标号
+      1.(sp)=(sp)-2
+        ((ss)*16+(sp))=(cs)
+        (sp)=(sp)-2
+        ((ss)*16+(sp))=(ip)
+      2.(cs)=标号所在的地址
+        （IP）=标号所在的偏移地址
+五、转移地址在寄存器中的call指令
+    call 16位寄存器 ；相当于push ip，jmp 16位寄存器
+    功能：（sp）=(sp)-2
+          ((ss)*16+(sp))=(IP)
+          (IP)=(16位寄存器)
+六、转移地址在内存中的call指令
+    call word ptr 内存单元地址
+    call dword ptr 内存地址
+七、call和ret的配合使用
+八、mul指令
+    乘法命令
+    注意：相乘的两个数：要么都是8位的，要么都是16位的
+    结果：8位：AX中
+         16位：DX（高位）和AX（低位）中。
+    格式：mul reg
+        mul 内存单元
+        mul byte ptr ds:[0];(al)=(al)*(ds*16+0);
+        mul word ptr ds:[0];(dx)=(ax)*(ds*16+0)结果的高16位;
+                            (ax)=(ax)*(ds*16+0)结果的底16位;
+九、模块化程序设计
+十、参数和结果传递问题
+    使用寄存器传递参数
+十一、批量数据的传递
+    使用内存空间或栈
+十二、寄存器冲突的问题

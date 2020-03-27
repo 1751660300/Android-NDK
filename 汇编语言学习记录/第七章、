@@ -1,0 +1,41 @@
+一、and和or指令
+    1.and指令：逻辑与，都为真为真
+        可以通过该指令可将操作对象的第N位置零 如：add al,011111B
+    2.or指令：逻辑或，全假为假
+        可以通过该指令将操作对象的第N位设为1，其他位不变，如：or al,0010000B
+二、关于ASCII码
+三、以字符形式输出数据
+    1.定义字符数据：db 'unIX' 相当于db 75H,6EH,...
+四、大小写转换问题
+    就是改变对应的ascii码，大小写之间相差32，只有第五位不同，一个是0，一个是1
+    这样就可以使用and和or来改变大小写;
+    小写的数值，比大写的数值大
+五、[bx+idata]
+    1.之前使用[bx]指明内存单元，还可以用[bx+idata]这种更加灵活的方式
+        mov ax,[bx+200]
+        mov ax,200[bx]
+        mov ax,[bx].200
+六、用[bx+idata]的方式进行数组操作
+        mov ax,data
+        mov ds,ax
+        mov bx,0
+        mov cx,5
+        mov ax,0
+    s:mov al,[bx]
+        or al,00100000b
+        mov [bx],al
+        add bx,1
+        loop s
+        mov cx,4
+    s0:mov al,[bx]
+        and al,11011111b
+        mov [bx],al
+        add bx,1
+        loop s0
+    这段程序可以使用[bx+idata]来简化，两个循环，就只需要一个循环了
+七、SI和DI
+    SI和DI和bx相似，但是SI，DI不能分为两个8位的寄存器使用
+八、[bx+SI]和[bx+DI]
+    寻址方式中有两个通用寄存器
+九、[bx+si+idata]和[bx+di+idata]
+十、不同寻址方式的灵活应用
